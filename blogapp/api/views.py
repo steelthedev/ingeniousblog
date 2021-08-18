@@ -27,13 +27,14 @@ def BlogView(request):
             return Response(data=serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['GET', 'POST' ])
 def ViewPost(request , slug):
     try:
         blog = Blog.objects.get(slug=slug)
     except blog.DoesNotExist:
         return HttpResponse(status = 404 )
     if request.method  == "GET":
-        serializer = BlogSerializer(blog , many=True)
+        serializer = BlogSerializer(blog)
         return Response(serializer.data)
     
 
